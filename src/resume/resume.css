@@ -1,0 +1,86 @@
+/* Resume templates. Single column, real text, standard headings: safe for ATS parsers.
+   Sizes are in pt/mm so the preview matches the printed PDF. */
+
+/* No letter-spacing anywhere: PDF text extraction (what ATS parsers use) splits spaced-out letters into separate words. */
+.rv {
+  --accent: #1d4ed8;
+  --fs: 1;
+  --sp: 1;
+  --ink: #111418;
+  --muted: #555b66;
+  --rule: #c9ced6;
+  --mx: 14mm;
+  --my: 12mm;
+  width: 210mm;
+  min-height: 297mm;
+  padding: var(--my) var(--mx);
+  background: #fff;
+  color: var(--ink);
+  font-size: calc(10pt * var(--fs));
+  line-height: 1.38;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+  overflow-wrap: anywhere;
+}
+.rv.letter { width: 8.5in; min-height: 11in; --my: 0.5in; --mx: 0.6in; }
+.rv * { box-sizing: border-box; }
+.rv a { color: inherit; text-decoration: none; }
+.rv h1, .rv h2, .rv h3, .rv p, .rv ul { margin: 0; }
+.rv ul { padding-left: 1.1em; }
+.rv li { margin-top: calc(1.6pt * var(--sp)); padding-left: 0.1em; }
+.rv li::marker { color: var(--muted); }
+
+.rv__head { margin-bottom: calc(8pt * var(--sp)); }
+.rv__name { font-size: 2.3em; line-height: 1.05; font-weight: 700; }
+.rv__headline { font-size: 1.08em; color: var(--muted); margin-top: 2pt; }
+.rv__contact { margin-top: 4pt; font-size: 0.92em; color: var(--muted); display: flex; flex-wrap: wrap; column-gap: 0; row-gap: 1pt; }
+.rv__contact span:not(:last-child)::after { content: "·"; margin: 0 6pt; color: var(--rule); }
+
+.rv__sec { margin-top: calc(9pt * var(--sp)); }
+.rv__h { font-size: 0.95em; font-weight: 700; text-transform: uppercase; margin-bottom: calc(4pt * var(--sp)); }
+.rv__item { margin-top: calc(6pt * var(--sp)); break-inside: avoid; page-break-inside: avoid; }
+.rv__item:first-of-type { margin-top: 0; }
+.rv__row { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+.rv__row > :first-child { min-width: 0; }
+.rv__date { flex: none; font-size: 0.92em; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rv__role { font-weight: 700; }
+.rv__sub { color: var(--muted); font-size: 0.95em; }
+.rv__tech { color: var(--muted); font-size: 0.92em; }
+.rv__summary { color: var(--ink); }
+.rv__skill { margin-top: calc(1.8pt * var(--sp)); }
+.rv__skill b { font-weight: 700; }
+.rv__details { color: var(--muted); font-size: 0.95em; }
+.rv__empty { color: #a0a6b0; font-style: italic; }
+.rv__ph { background: #fff3a8; border-radius: 2px; }
+
+/* ---------- Modern (Inter, accent colour) */
+.rv--modern { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
+.rv--modern .rv__name { color: var(--accent); font-weight: 700; }
+.rv--modern .rv__h { color: var(--accent); display: flex; align-items: center; gap: 8pt; font-size: 0.92em; }
+.rv--modern .rv__h::after { content: ""; flex: 1; border-top: 0.75pt solid var(--rule); }
+.rv--modern .rv__org { font-weight: 500; }
+
+/* ---------- Classic (serif, centred header) */
+.rv--classic { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-size: calc(10.5pt * var(--fs)); line-height: 1.34; }
+.rv--classic .rv__head { text-align: center; }
+.rv--classic .rv__name { font-size: 2.1em; font-weight: 600; }
+.rv--classic .rv__headline { font-style: italic; }
+.rv--classic .rv__contact { justify-content: center; }
+.rv--classic .rv__h { font-weight: 600; font-size: 0.95em; border-bottom: 0.9pt solid var(--accent); padding-bottom: 1.5pt; color: var(--ink); }
+.rv--classic .rv__role, .rv--classic .rv__skill b { font-weight: 600; } /* only 400 and 600 are loaded: avoid synthetic bold */
+.rv--classic .rv__sub { font-style: italic; }
+
+/* ---------- Technical (IBM Plex, mono details, compact) */
+.rv--technical { font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif; font-size: calc(9.6pt * var(--fs)); line-height: 1.36; }
+.rv--technical .rv__name { font-size: 2.15em; font-weight: 700; }
+.rv--technical .rv__headline { color: var(--accent); font-weight: 500; }
+.rv--technical .rv__contact, .rv--technical .rv__date, .rv--technical .rv__tech { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.86em; }
+.rv--technical .rv__h { font-size: 0.9em; padding-left: 6pt; border-left: 2.5pt solid var(--accent); line-height: 1.1; }
+.rv--technical .rv__skill { display: grid; grid-template-columns: 26mm 1fr; gap: 6pt; }
+
+/* Page size and margins come from an @page rule added just before printing (see src/lib/print.ts). */
+@media print {
+  .rv { width: auto !important; min-height: 0 !important; padding: 0 !important; box-shadow: none !important; }
+  .rv__ph { background: none; }
+}
